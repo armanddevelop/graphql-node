@@ -1,0 +1,33 @@
+type Query {
+  hello: String!
+  getPerson(name: String, age: Int): String
+  getInt(age: Int!): Int
+  getFloat: Float
+  getString: String
+  getBoolean: Boolean
+  getID: ID
+  getStrings: [String]
+  getStringsParams(param: String!): [String]
+  getNumbers(numbers: [Int!]!): [Int]
+  product(id: ID!): Product
+  allProducts: [Product!]!
+}
+type Mutation {
+  addProduct(params: CreateProductInput!): Product
+}
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  description: String!
+  imagen: String!
+  createdAt: String
+}
+
+input CreateProductInput {
+  name: String!
+  price: Int!
+  description: String!
+  image: String
+  categoryId: ID!
+}
