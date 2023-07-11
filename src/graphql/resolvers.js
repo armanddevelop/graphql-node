@@ -1,10 +1,26 @@
-const { product, allProducts, addProduct } = require('./product.resolvers');
+const { logIn } = require('./auth.resolvers');
+const { addCategory, getCategoryById } = require('./category.resolvers');
+const { RegularExpression } = require('graphql-scalars');
+const {
+  product,
+  allProducts,
+  getProductsByCategory,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+} = require('./product.resolvers');
 const {
   hello,
   getStrings,
   getStringsParams,
   getNumbers,
 } = require('./test.resolvers');
+
+const CategoryNameType = new RegularExpression(
+  'CategoryNameType',
+  /^[a-zA-Z0-9]{3,8}$/
+);
+
 //GET = Query
 //Todo lo de graphql es enviado por POST
 //POST,PUT,DELETE, PATCH = Mutations
@@ -22,9 +38,18 @@ const resolvers = {
     getID: () => '1654613',
     product,
     allProducts,
+    getCategoryById,
   },
   Mutation: {
+    addCategory,
     addProduct,
+    updateProduct,
+    deleteProduct,
+    logIn,
+  },
+  CategoryNameType,
+  Category: {
+    products: getProductsByCategory,
   },
 };
 const testResolvers = {

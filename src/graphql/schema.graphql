@@ -11,10 +11,16 @@ type Query {
   getNumbers(numbers: [Int!]!): [Int]
   product(id: ID!): Product
   allProducts: [Product!]!
+  getCategoryById(id: ID!): Category
 }
 type Mutation {
   addProduct(params: CreateProductInput!): Product
+  updateProduct(id: ID!, changes: UpdateProduct!): Product
+  deleteProduct(id: ID!): Product
+  logIn(email: EmailAddress!, password: String!): AuthResponse
+  addCategory(params: CreateCategoryInput): Category
 }
+
 type Product {
   id: ID!
   name: String!
@@ -22,12 +28,50 @@ type Product {
   description: String!
   imagen: String!
   createdAt: String
+  categoryId: ID!
+  category: Category!
+}
+
+type AuthResponse {
+  user: User
+  access_token: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  recoveryToken: String
+  role: String!
+  createdAt: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  image: URL!
+  createdAt: String!
+  products: [Product!]!
 }
 
 input CreateProductInput {
-  name: String!
+  name: CategoryNameType!
   price: Int!
   description: String!
   image: String
   categoryId: ID!
 }
+
+input UpdateProduct {
+  name: String
+  price: Int
+  description: String
+  image: String
+  categoryId: ID
+}
+
+input CreateCategoryInput {
+  name: String!
+  image: String!
+}
+
+scalar CategoryNameType

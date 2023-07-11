@@ -13,13 +13,28 @@ const allProducts = async (_, args) => {
 };
 
 const addProduct = async (_, { params }) => {
-  console.log(params);
   const data = await Product.create(params);
   return data;
 };
-
+const updateProduct = async (_, { id, changes }) => {
+  const data = await Product.update(id, changes);
+  return data;
+};
+const deleteProduct = async (_, { id }) => {
+  const data = await Product.delete(id);
+  return data;
+};
+const getProductsByCategory = async (parent) => {
+  const {
+    dataValues: { id },
+  } = parent;
+  return await Product.getByCategory(id);
+};
 module.exports = {
   product,
   allProducts,
+  getProductsByCategory,
   addProduct,
+  updateProduct,
+  deleteProduct,
 };

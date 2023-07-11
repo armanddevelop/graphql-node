@@ -4,7 +4,6 @@
 npm install
 ```
 
-
 # Migrations
 
 ```sh
@@ -22,6 +21,14 @@ npm run dev
 ```sh
 npm run start
 ```
+
+# Connect to local DB
+
+docker-compose up -d postgres
+
+# Command to check if the container is running
+
+docker ps
 
 # Connect to DB from Docker
 

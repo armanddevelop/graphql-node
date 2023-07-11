@@ -57,9 +57,29 @@ class ProductsService {
   }
 
   async delete(id) {
-    const product = await this.findOne(id);
-    await product.destroy();
-    return { id };
+    try {
+      const product = await this.findOne(id);
+      await product.destroy();
+      return product;
+    } catch (error) {
+      console.error('[deleteProductFail]: ', error);
+      if (error?.output) {
+        const { statusCode } = error.output;
+        if (statusCode === 404) {
+          throw boom.notFound('product not found');
+        }
+      }
+    }
+  }
+  async getByCategory(id) {
+    try {
+      const categories = await models.Product.findAll({
+        where: { categoryId: id },
+      });
+      return categories;
+    } catch (error) {
+      console.error('[getByCategoryError]: ', error);
+    }
   }
 }
 
